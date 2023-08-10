@@ -435,7 +435,7 @@ return
 ~$*1::
 ~$*2::
 ~$*R::
-    Sleep, 500
+    Sleep, 400
     DetectAndSetWeapon()
 return
 
@@ -558,11 +558,7 @@ IniRead:
         IniRead, colorblind, settings.ini, screen settings, colorblind
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, sens, settings.ini, mouse settings, sens
-        IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
-        IniRead, volume, settings.ini, voice settings, volume
-        IniRead, rate, settings.ini, voice settings, rate
-        IniRead, debug, settings.ini, other settings, debug
         IniRead, gold_optics, settings.ini, other settings, gold_optics
         IniRead, trigger_only, settings.ini, trigger settings, trigger_only
         IniRead, trigger_button, settings.ini, trigger settings, trigger_button
