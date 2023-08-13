@@ -422,21 +422,23 @@ DetectAndSetWeapon()
     }
 }
 
-~$*E Up::
-    Sleep, 500
-    DetectAndSetWeapon()
-return
-
-~$*B::
-    Sleep, 500
-    DetectAndSetWeapon()
-return
-
 ~$*1::
 ~$*2::
+~$*B::
+~$*E::
 ~$*R::
-    Sleep, 400
+~$*WheelDown::
+~$*WheelUp::
     DetectAndSetWeapon()
+return
+
+~$*E Up::
+    Sleep, 200
+    DetectAndSetWeapon()
+return
+
+~$*G Up::
+    Reset()
 return
 
 ~$*3::
@@ -449,16 +451,8 @@ return
     }
 return
 
-~$*G Up::
-    Reset()
-return
-
 ~End::
 ExitApp
-
-; $*LButton up::
-;     Click, Up
-; return
 
 ~$*LButton::
     if (has_gold_optics && gold_optics && is_gold_optics_weapon && GetKeyState("RButton")) {
@@ -497,7 +491,7 @@ ExitApp
     Loop {
         x := 0
         y := 0
-        interval := 20
+        interval := 10
         if (A_Index <= current_pattern.MaxIndex()) {
             compensation := StrSplit(current_pattern[Min(A_Index, current_pattern.MaxIndex())],",")
             if (compensation.MaxIndex() < 3) {
@@ -507,29 +501,14 @@ ExitApp
             y := compensation[2]
             interval := compensation[3]
         }
-
-
-        if (IsAutoClickNeeded()) {
-            Click
-            Random, rand, 1, 20
-            interval := interval + rand
-        }
-        
-        
-        if (IsAutoClickNeeded()) {
-            Click
-            Random, rand, 1, 20
-            interval := interval + rand
-        }
         
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
         
         Sleep, interval
-
-        if (!GetKeyState("LButton","P")) {
-            break
-        }
-    }
+        ; if (!GetKeyState("LButton","P")) {
+        ;     break
+        ; }
+    } until !GetKeyState("LButton","P") || A_Index > current_pattern.maxindex()
 return
 
 IniRead:
@@ -633,12 +612,3 @@ ExitSub:
         MsgBox, % "Library unloaded"
     }
 ExitApp
-
-~Home::
-	Pause
-	Suspend
-return
-
-~End::
-    ExitApp
-Return
