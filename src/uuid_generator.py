@@ -16,7 +16,6 @@ def updateUUID(filename, new_uuid):
 if __name__ == '__main__':
     new_uuid = uuid.uuid4().hex
     
-    updateUUID('gui.ahk', new_uuid)
     updateUUID('apexmaster.ahk', new_uuid)
     input("Done! Press enter to exit ;)") # to let people know the script is actually done...
 
