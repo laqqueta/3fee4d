@@ -76,7 +76,6 @@ if (colorblind == "Protanopia") {
 }
 global SHOTGUN_WEAPON_COLOR := 0x07206B
 global SNIPER_WEAPON_COLOR := 0x8F404B
-global SELLA_WEAPON_COLOR := 0xA13CA1
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
