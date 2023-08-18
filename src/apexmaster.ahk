@@ -40,6 +40,7 @@ global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
 global NEMESIS_WEAPON_TYPE := "NEMESIS"
 global NEMESIS_CHARGED_WEAPON_TYPE := "NEMESIS CHARGED"
 global PROWLER_WEAPON_TYPE := "PROWLER"
+global PROWLER_FULLAUTO_WEAPON_TYPE := "PROWLER FULLAUTO"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
 global HEMLOK_SINGLE_WEAPON_TYPE := "HEMLOK SINGLE"
 global RE45_WEAPON_TYPE := "RE45"
@@ -87,7 +88,7 @@ global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
 ; heavy weapon
 global FLATLINE_PIXELS := LoadPixel("flatline")
-global PROWLER_PIXELS := LoadPixel("prowler")
+global HEMLOK_PIXELS := LoadPixel("hemlok")
 global RAMPAGE_PIXELS := LoadPixel("rampage")
 global P3030_PIXELS := LoadPixel("p3030")
 ; special
@@ -100,7 +101,7 @@ global NEMESIS_PIXELS := LoadPixel("nemesis")
 ; sniper weapon
 global WINGMAN_PIXELS := LoadPixel("wingman")
 ; supply drop weapon
-global HEMLOK_PIXELS := LoadPixel("hemlok")
+global PROWLER_PIXELS := LoadPixel("prowler")
 global LSTAR_PIXELS := LoadPixel("lstar")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
@@ -214,15 +215,15 @@ global CAR_PATTERN := LoadPattern("CAR.txt")
 global FLATLINE_PATTERN := LoadPattern("Flatline.txt")
 global RAMPAGE_PATTERN := LoadPattern("Rampage.txt")
 global RAMPAGEAMP_PATTERN := LoadPattern("RampageAmp.txt")
-global PROWLER_PATTERN := LoadPattern("Prowler.txt")
+global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
+global HEMLOK_SINGLE_PATTERN := LoadPattern("HemlokSingle.txt")
 global P3030_PATTERN := LoadPattern("3030.txt")
 ; sinper weapon pattern
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global LSTAR_PATTERN := LoadPattern("Lstar.txt")
-global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
-global HEMLOK_SINGLE_PATTERN := LoadPattern("HemlokSingle.txt")
-
+global PROWLER_PATTERN := LoadPattern("Prowler.txt")
+global PROWLER_FULLAUTO_PATTERN := LoadPattern("ProwlerFullAuto.txt")
 ; weapon detection
 global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
@@ -403,8 +404,14 @@ DetectAndSetWeapon()
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(PROWLER_PIXELS)) {
-            current_weapon_type := PROWLER_WEAPON_TYPE
-            current_pattern := PROWLER_PATTERN
+            if (!is_single_mode) {
+                    current_weapon_type := PROWLER_WEAPON_TYPE
+                    current_pattern := PROWLER_PATTERN
+                } else {
+                    current_weapon_type := PROWLER_FULLAUTO_WEAPON_TYPE
+                    current_pattern := PROWLER_FULLAUTO_PATTERN
+                }
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(LSTAR_PIXELS)) {
             current_weapon_type := LSTAR_WEAPON_TYPE
             current_pattern := LSTAR_PATTERN
@@ -464,7 +471,7 @@ ExitApp
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
         return
 
-    if (is_single_mode)
+    if (is_single_mode && current_weapon_type != PROWLER_FULLAUTO_WEAPON_TYPE)
         return
 
     if (ads_only && !GetKeyState("RButton"))
