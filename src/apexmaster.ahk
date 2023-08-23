@@ -301,8 +301,6 @@ IsValidWeaponColor(weapon_color)
 DetectAndSetWeapon()
 {
     Reset()
-    
-    is_single_mode := CheckSingleMode()
 
     ; first check which weapon is activate
     PixelGetColor, weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -370,6 +368,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
+            is_single_mode := CheckSingleMode()
             if (is_single_mode) {
                 current_weapon_type := HEMLOK_SINGLE_WEAPON_TYPE
                 current_pattern := HEMLOK_SINGLE_PATTERN
@@ -403,6 +402,7 @@ DetectAndSetWeapon()
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(PROWLER_PIXELS)) {
+            is_single_mode := CheckSingleMode()
             if (!is_single_mode) {
                     current_weapon_type := PROWLER_WEAPON_TYPE
                     current_pattern := PROWLER_PATTERN
